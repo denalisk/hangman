@@ -12,11 +12,18 @@ namespace HangmanGame.Objects
             RandomWordSet(newWord);
             Console.WriteLine(RandomWordGet());
             GuessedWordInitialize(RandomWordGet());
+            Console.WriteLine(GuessedWordGet());
             while (playing)
             {
-                char guess = Console.ReadLine();
+                Console.WriteLine("Current state of the word is " + GuessedWordGet());
+                Console.WriteLine("What would you like to guess...?");
+                char guess = Console.ReadLine()[0];
                 string guessResults = CheckLetter(RandomWordGet(), GuessedWordGet(), guess);
+                Console.WriteLine("Your guess result is " + guessResults);
+                GuessedWordSet(guessResults);
+                playing = CheckPlaying(GuessedWordGet());
             }
+            Console.WriteLine("Game over");
 
 
         }
@@ -61,15 +68,16 @@ namespace HangmanGame.Objects
             return checkResults;
         }
 
-        public static bool CheckWin(string currentGuessState)
+        public static bool CheckPlaying(string currentGuessState)
         {
             foreach (char letter in currentGuessState)
             {
                 if (letter == '_')
                 {
-                    return false;
+                    return true;
                 }
             }
+            return false;
         }
 
         public static string RandomWordGet()
@@ -93,9 +101,9 @@ namespace HangmanGame.Objects
             string blanks = "";
             foreach (char letter in word)
             {
-                blanks += "_"
+                blanks += "_";
             };
-            return blanks;
+            _guessedWord = blanks;
         }
     }
 }
