@@ -8,9 +8,22 @@ namespace HangmanGame.Objects
         public static void Main()
         {
             Console.WriteLine("working");
-            Console.WriteLine(RandomWord());
+            string newWord = RandomWord();
+            RandomWordSet(newWord);
+            Console.WriteLine(RandomWordGet());
+            GuessedWordInitialize(RandomWordGet());
+            while (playing)
+            {
+                char guess = Console.ReadLine();
+                string guessResults = CheckLetter(RandomWordGet(), GuessedWordGet(), guess);
+            }
+
 
         }
+        //An array made of the letters of the RandomWord()
+        private static string _randomWord;
+        private static string _guessedWord;
+        public static bool playing = true;
 
         public static string[] hangmanWords = new string[100]
         {
@@ -22,6 +35,67 @@ namespace HangmanGame.Objects
             Random random = new Random();
             int randomIndex = random.Next(0, 100);
             return hangmanWords[randomIndex];
+        }
+        public static string CheckLetter(string word, string guessedWord, char guess)
+        {
+            string checkResults = "";
+            for (int index = 0; index < word.Length; index++)
+            {
+                if (guessedWord[index] == '_')
+                {
+                    if (word[index] == guess)
+                    {
+                        checkResults += word[index];
+                    }
+                    else
+                    {
+                        checkResults += '_';
+                    }
+
+                }
+                else
+                {
+                    checkResults += guessedWord[index];
+                }
+            };
+            return checkResults;
+        }
+
+        public static bool CheckWin(string currentGuessState)
+        {
+            foreach (char letter in currentGuessState)
+            {
+                if (letter == '_')
+                {
+                    return false;
+                }
+            }
+        }
+
+        public static string RandomWordGet()
+        {
+            return _randomWord;
+        }
+        public static void RandomWordSet(string word)
+        {
+            _randomWord = word;
+        }
+        public static string GuessedWordGet()
+        {
+            return _guessedWord;
+        }
+        public static void GuessedWordSet(string word)
+        {
+            _guessedWord = word;
+        }
+        public static void GuessedWordInitialize(string word)
+        {
+            string blanks = "";
+            foreach (char letter in word)
+            {
+                blanks += "_"
+            };
+            return blanks;
         }
     }
 }

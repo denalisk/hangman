@@ -29,6 +29,7 @@
 #### Stretch Goals
 
 * Make it real nice
+* add on screen keyboard that grays out used letters
 
 ## Setup
 
